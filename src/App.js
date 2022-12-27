@@ -13,7 +13,8 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import FileUploadSingle from './components/FileUpload';
 import img_box from './img/610.png'
-import { AppBar, Typography} from '@mui/material';
+import { AppBar, Typography,Paper} from '@mui/material';
+
 
 
 
@@ -25,6 +26,7 @@ function App() {
   const [HiveData, setHiveData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState('');
+  const [BOXID, setBOXID] = useState();
   moment.locale("zh-tw");  
   var result = {};
   
@@ -39,6 +41,8 @@ function App() {
         throw new Error(`Error! status: ${response.status}`);
       }
       result = await response.json();
+      setBOXID(result[0].HiveID);
+      
       result = result.sort((a,b)=>new Date(a.CreateTime)- new Date(b.CreateTime))
       setbeeData({
         labels:result.map((item)=>moment(item.CreateTime).format("LLL")),
@@ -111,6 +115,7 @@ function App() {
     </Row>
     <Row>
       <Col>
+      {BOXID!=undefined?"蜂箱"+BOXID:""}
         <div className="chart-container">
           <Linechart chartData={beeData} />
         </div>
@@ -120,7 +125,7 @@ function App() {
     <Row>
       <Col>
         <div>
-          <FileUploadSingle></FileUploadSingle>
+          <FileUploadSingle BOX_ID={BOXID}></FileUploadSingle>
         </div>
       </Col>
     </Row>

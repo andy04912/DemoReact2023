@@ -1,9 +1,10 @@
-
 import React, {useState} from 'react';
 import MyVerticallyCenteredModal from './CenterModal';
 import  { useRef } from 'react'
 
-function FileUploadSingle(){
+
+function FileUploadSingle({BOX_ID}){
+	
 	const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -22,9 +23,11 @@ function FileUploadSingle(){
         ref.current.click()
       }
 	const handleSubmission = () => {
+		console.log({BOX_ID})
 		const formData = new FormData();
 		setIsLoading(true)
 		formData.append('file', selectedFile);
+		formData.append("ID",BOX_ID)
 
 		fetch(
 			'https://nchu2022-bee.onrender.com/ReactUpload',
