@@ -2,6 +2,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 function MyVerticallyCenteredModal(props) {
+  const handleConfirm = ()=>{
+    props.onHide();
+    window.location.reload();
+  }
   return (
     <Modal
       {...props}
@@ -11,14 +15,14 @@ function MyVerticallyCenteredModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-        上傳成功
+        {props.Title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>上傳成功</h4>
+        <h4>{props.Title}</h4>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={handleConfirm}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
